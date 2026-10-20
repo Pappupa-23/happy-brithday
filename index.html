@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Happy 24th Birthday to my Babe 🎂</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        /* CSS Variables - โทนสีตุ่นๆ (Muted Colors) */
+        :root {
+            --dusty-rose: #d4a3a3;
+            --warm-taupe: #c9baba;
+            --soft-beige: #e8e3df;
+            --muted-sage: #b3bcb0;
+            --text-dark: #5a4f4f;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Kanit', sans-serif;
+            background: linear-gradient(135deg, var(--soft-beige), var(--warm-taupe), var(--dusty-rose));
+            background-size: 200% 200%;
+            animation: gradientMove 12s ease infinite;
+            overflow: hidden; /* ทำตัวเป็นแอปบนมือถือ เลื่อนจอไม่ได้ */
+            color: var(--text-dark);
+            touch-action: pan-x pan-y;
+        }
+
+        @keyframes gradientMove {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Glassmorphism (กล่องกระจกขุ่นๆ) */
+        .glass {
+            background: rgba(255, 255, 255, 0.4);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            box-shadow: 0 8px 32px 0 rgba(160, 140, 140, 0.2);
+        }
+
+        /* Animations */
+        .fade-in { animation: fadeIn 1s ease forwards; }
+        .fade-out { animation: fadeOut 0.8s ease forwards; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeOut {
+            from { opacity: 1; transform: translateY(0); }
+            to { opacity: 0; transform: translateY(-15px); visibility: hidden; }
+        }
+
+        .pulse { animation: pulse 2.5s infinite ease-in-out; }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        /* Card Stack (แกลเลอรีรูป) */
+        .card-container {
+            position: relative;
+            width: 290px;
+            height: 400px;
+            perspective: 1000px;
+        }
+
+        .photo-card {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border-radius: 20px;
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.4s ease;
+            transform-origin: bottom center;
+            cursor: pointer;
+            user-select: none;
+            background: rgba(255, 255, 255, 0.65); /* กระจกทึบขึ้นนิดนึงให้รูปเด่น */
+        }
+
+        .photo-card img {
+            width: 100%;
+            height: 270px;
+            object-fit: cover;
+            border-radius: 12px;
+            margin-bottom: 16px;
+            pointer-events: none;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+        }
+
+        .card-caption {
+            font-weight: 500;
+            color: #7a6a6a;
+            text-align: center;
+            font-size: 1.05rem;
+            line-height: 1.4;
+        }
+
+        .swipe-out-right { animation: swipeOutRight 0.6s ease forwards; }
+
+        @keyframes swipeOutRight {
+            to {
+                transform: translateX(150%) rotate(15deg);
+                opacity: 0;
+            }
+        }
+
+        /* Button */
+        .btn-muted {
+            background: rgba(255, 255, 255, 0.7);
+            color: #8c7373;
+            border: 1px solid rgba(255,255,255,0.8);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
+        }
+
+        .btn-muted:active {
+            transform: scale(0.95);
+            background: rgba(255, 255, 255, 0.9);
+        }
+
+        /* Floating Particles */
+        .particle {
+            position: absolute;
+            bottom: -50px;
+            pointer-events: none;
+            opacity: 0.5;
+            animation: floatUp linear infinite;
+        }
+
+        @keyframes floatUp {
+            to {
+                transform: translateY(-120vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body class="relative w-full h-screen flex justify-center items-center">
+
+    <!-- พื้นหลังแอนิเมชัน -->
+    <div id="particles-container" class="absolute inset-0 pointer-events-none z-0"></div>
+
+    <!-- หน้า 1: กล่องของขวัญต้อนรับ -->
+    <section id="screen-welcome" class="absolute inset-0 flex flex-col items-center justify-center z-30 px-6 transition-all duration-700">
+        <div class="glass rounded-3xl p-10 flex flex-col items-center text-center max-w-sm w-full pulse cursor-pointer" onclick="openGift()">
+            <div class="text-7xl mb-6">🎁</div>
+            <h1 class="text-2xl font-medium text-[#7a6a6a] mb-2">มีของขวัญมาให้เธอ</h1>
+            <p class="text-sm text-[#9a8c8c]">ลองจิ้มที่กล่องดูสิ เค้าตั้งใจทำมาให้เลยนะ</p>
+        </div>
+    </section>
+
+    <!-- หน้า 2: แกลเลอรี 5 รูป -->
+    <section id="screen-gallery" class="absolute inset-0 flex flex-col items-center justify-center z-20 px-6 hidden opacity-0">
+        <h2 class="text-xl font-medium text-[#7a6a6a] mb-6 drop-shadow-sm text-center">ความทรงจำเล็กๆ ของเรา 🤎</h2>
+        
+        <div class="card-container" id="card-stack">
+            <!-- JavaScript จะแทรกรูปเข้ามาตรงนี้ -->
+        </div>
+
+        <p class="text-xs text-[#9a8c8c] mt-8 font-medium opacity-80 animate-bounce">ปัดขวา หรือ แตะที่รูป เพื่อดูรูปต่อไปนะ</p>
+    </section>
+
+    <!-- หน้า 3: ข้อความอวยพร -->
+    <section id="screen-message" class="absolute inset-0 flex flex-col items-center justify-center z-10 px-6 hidden opacity-0">
+        <button id="reveal-btn" class="btn-muted font-medium text-lg py-3 px-8 rounded-full z-20" onclick="revealMessage()">
+            เปิดอ่านข้อความจากเค้านะ 💌
+        </button>
+
+        <div id="final-card" class="glass rounded-3xl p-8 max-w-md w-full text-center hidden flex-col items-center shadow-lg relative">
+            <div class="absolute -top-8 text-5xl">🎂</div>
+            <h1 class="text-xl font-semibold text-[#8c7373] mb-3 mt-2">Happy 24th Birthday to my Babe!</h1>
+            <div class="w-12 h-[2px] bg-[#d4a3a3] mb-4"></div>
+            
+            <p class="text-[#6b5e5e] leading-relaxed text-[15px] font-normal mb-5 text-left">
+                วันที่วันอาราย วันนี้เป็นวันของเธอแล้วนะ อายุ 24 แล้ว!<br><br>
+                เค้าขอให้เธอมีความสุขมากๆ ยิ้มเยอะๆ ในทุกๆ วันเลยนะ คิดอะไรก็สมความปราถนา ไม่เจอใครแล้วอยากให้รู้ไว้ว่า เค้าอยู่ตรงนี้เสมอนะคะ<br><br>
+                เค้าดีใจมากๆ เลยนะที่มีเธอเข้ามา เค้าอยากเป็นคนที่ทำให้เธอยิ้มได้แบบนี้ไปเรื่อยๆเลย เดี๋ยวเราไปสร้างความทรงจำด้วยกันอีกเยอะๆ เลยนะ 
+            </p>
+            
+            <div class="text-md text-[#a38b8b] font-medium mt-2">รักเธอเสมอนะคะ 🤍</div>
+            <div class="text-md text-[#a38b8b] font-medium mt-2">จาก... เค้าเอง 😊</div>
+        </div>
+    </section>
+
+    <script>
+        // --- 1. ระบบอนุภาคพื้นหลัง (สร้างวงกลมสีตุ่นๆ ลอยขึ้นมา) ---
+        function createParticle() {
+            const container = document.getElementById('particles-container');
+            const particle = document.createElement('div');
+            particle.classList.add('particle');
+            
+            const shapes = ['🤍', '✨', '☁️', '🤎','😽'];
+            particle.innerText = shapes[Math.floor(Math.random() * shapes.length)];
+            
+            particle.style.left = Math.random() * 100 + 'vw';
+            particle.style.fontSize = (Math.random() * 12 + 10) + 'px';
+            particle.style.animationDuration = (Math.random() * 6 + 6) + 's';
+            particle.style.animationDelay = (Math.random() * 2) + 's';
+            
+            container.appendChild(particle);
+
+            setTimeout(() => { particle.remove(); }, 12000);
+        }
+
+        setInterval(createParticle, 600);
+
+        // --- 2. เปลี่ยนหน้าเปิดกล่องของขวัญ ---
+        function openGift() {
+            for(let i=0; i<15; i++) { setTimeout(createParticle, i * 100); }
+
+            const welcomeScreen = document.getElementById('screen-welcome');
+            const galleryScreen = document.getElementById('screen-gallery');
+
+            welcomeScreen.classList.add('fade-out');
+            
+            setTimeout(() => {
+                welcomeScreen.style.display = 'none';
+                galleryScreen.classList.remove('hidden');
+                galleryScreen.classList.add('fade-in');
+            }, 800);
+        }
+
+        // --- 3. แกลเลอรี 5 รูป ---
+        // *** คุณสามารถเปลี่ยนลิงก์รูปตรง 'src' เป็นรูปของคุณได้เลย ***
+        const photos = [
+            { 
+                src: 'pic5.jpg', 
+                caption: 'เดี๋ยวมาถ่ายรูปคู่กันอีกเยอะๆ เลยนะ 🤍' 
+            },
+            { 
+                src: 'pic4.jpg', 
+                caption: 'รอยยิ้มของเธอวันนั้นน่ารักมากเลยละ 😊' 
+            },
+            { 
+                src: 'pic3.jpg', 
+                caption: 'ชอบเวลาที่เค้าได้อยู่ใกล้เธอแบบนี้จัง 🤎' 
+            },
+            { 
+                src: 'pic2.jpg', 
+                caption: 'ไว้ไปเที่ยวด้วยกันอีกนะ 🤎' 
+            },
+            { 
+                src: 'pic1.jpg', 
+                caption: 'แฮปคร้าบบ ไอตะเล็กตะน้อยเค้า 🤍' 
+            }
+        ];
+
+        const cardStack = document.getElementById('card-stack');
+        let currentCardIndex = photos.length - 1; // เริ่มจากรูปล่าสุด (ใบที่ 5 จะอยู่ล่างสุด ใบที่ 1 อยู่บนสุด)
+
+        // สร้างการ์ด (ใส่ย้อนหลังเพื่อให้ใบแรกสุดซ้อนอยู่บนสุด)
+        photos.slice().reverse().forEach((photo, index) => {
+            const card = document.createElement('div');
+            card.classList.add('photo-card', 'glass');
+            
+            // คำนวณตำแหน่งซ้อนทับกัน
+            const originalIndex = photos.length - 1 - index;
+            const offset = index * 6; // ห่างชั้นละ 6px
+            const scale = 1 - (index * 0.04); // ย่อขนาดลงทีละ 4%
+            
+            card.style.transform = `translateY(${offset}px) scale(${scale})`;
+            card.style.zIndex = photos.length - index;
+            
+            card.innerHTML = `
+                <img src="${photo.src}" alt="Memory">
+                <div class="card-caption">${photo.caption}</div>
+            `;
+            
+            cardStack.appendChild(card);
+        });
+
+        // ระบบ ปัด/แตะ เพื่อเปลี่ยนรูป
+        let startX = 0, startY = 0;
+
+        function handleTouchStart(e) {
+            startX = e.changedTouches ? e.changedTouches[0].screenX : e.screenX;
+            startY = e.changedTouches ? e.changedTouches[0].screenY : e.screenY;
+        }
+
+        function handleTouchEnd(e) {
+            let endX = e.changedTouches ? e.changedTouches[0].screenX : e.screenX;
+            let endY = e.changedTouches ? e.changedTouches[0].screenY : e.screenY;
+            
+            let diffX = endX - startX;
+            let diffY = endY - startY;
+
+            // ถ้าปัดขวา/ซ้าย หรือแตะเฉยๆ ก็ให้เปลี่ยนรูป
+            if (Math.abs(diffX) > 20 || (Math.abs(diffX) < 10 && Math.abs(diffY) < 10)) {
+                nextCard();
+            }
+        }
+
+        cardStack.addEventListener('touchstart', handleTouchStart);
+        cardStack.addEventListener('touchend', handleTouchEnd);
+        cardStack.addEventListener('mousedown', handleTouchStart);
+        cardStack.addEventListener('mouseup', handleTouchEnd);
+
+        let isAnimating = false;
+
+        function nextCard() {
+            if (currentCardIndex < 0 || isAnimating) return;
+            isAnimating = true;
+
+            const cards = document.querySelectorAll('.photo-card');
+            // ใบที่อยู่บนสุดคือใบที่เรากำลังโฟกัส (คำนวณจาก index ย้อนกลับ)
+            const topCard = cards[photos.length - 1 - currentCardIndex];
+
+            topCard.classList.add('swipe-out-right');
+            currentCardIndex--;
+
+            // ถ้าดูครบ 5 รูปแล้ว
+            if (currentCardIndex < 0) {
+                setTimeout(() => { goToFinalScreen(); }, 600);
+                return;
+            }
+
+            // ขยับรูปที่เหลือขึ้นมา
+            setTimeout(() => {
+                let remainingIndex = 0;
+                for (let i = photos.length - 1 - currentCardIndex; i < photos.length; i++) {
+                    const card = cards[i];
+                    const offset = remainingIndex * 6;
+                    const scale = 1 - (remainingIndex * 0.04);
+                    card.style.transform = `translateY(${offset}px) scale(${scale})`;
+                    remainingIndex++;
+                }
+                isAnimating = false;
+            }, 150);
+        }
+
+        // --- 4. หน้าสุดท้าย ---
+        function goToFinalScreen() {
+            const galleryScreen = document.getElementById('screen-gallery');
+            const messageScreen = document.getElementById('screen-message');
+
+            galleryScreen.classList.remove('fade-in');
+            galleryScreen.classList.add('fade-out');
+
+            setTimeout(() => {
+                galleryScreen.style.display = 'none';
+                messageScreen.classList.remove('hidden');
+                messageScreen.classList.add('fade-in');
+            }, 800);
+        }
+
+        function revealMessage() {
+            const btn = document.getElementById('reveal-btn');
+            const finalCard = document.getElementById('final-card');
+
+            btn.style.display = 'none';
+            finalCard.classList.remove('hidden');
+            finalCard.classList.add('fade-in');
+            
+            for(let i=0; i<25; i++) { setTimeout(createParticle, i * 50); }
+        }
+    </script>
+</body>
+</html>
